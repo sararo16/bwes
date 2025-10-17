@@ -7,3 +7,23 @@ columnas en las que figurarán los idiomas (0 = Inglés, 1 = Francés, 2 = Alem�
 = Ruso). Mostrar por pantalla los alumnos que existen en cada nivel e idioma.*/
 
 ?>
+
+<?php
+$alumnos=array(
+    array(20,15,10,5), //Nivel básico
+    array(25,20,15,10), //Nivel medio
+    array(30,25,20,15)  //Nivel de perfeccionamiento
+);
+$niveles=array("Básico","Medio","Perfeccionamiento");
+$idiomas=array("Inglés","Francés","Alemán","Ruso");
+echo "<html>\n<body>\n";
+for ($i=0;$i<count($alumnos);$i++){
+    echo "<h3>Nivel ".$niveles[$i]."</h3>\n";
+    echo "<ul>\n";
+    for ($j=0;$j<count($alumnos[$i]);$j++){
+        echo "<li>Idioma ".$idiomas[$j].": ".$alumnos[$i][$j]." alumnos</li>\n";
+    }
+    echo "</ul>\n";
+}   
+echo "</body>\n</html>\n";
+?>
