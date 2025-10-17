@@ -4,19 +4,23 @@
 <?php
 if (isset($_POST['num1'])) {
     // Mostrar resultados
-    for ($i = 1; $i <= 10; $i++) {
+    $cantidad = intval($_POST['cantidad']);
+    for ($i = 1; $i <= $cantidad; $i++) {
         if (isset($_POST["num$i"])) {
             $numero = $_POST["num$i"];
             echo "El número $i es: $numero <br>";
         }
     }
-} else {
+} elseif (isset($_POST['cantidad'])) {
     // Mostrar formulario
+    $cantidad = intval($_POST['cantidad']);
+    
     echo <<< _END
-    <form method="post" action="FormularioDinamico.php">
+    <form method="post" action="FormularioDinamico2.php">   
     _END;
 
-    for ($i = 1; $i <= 10; $i++) {
+    $cantidad = intval($_POST['cantidad']);
+    for ($i = 1; $i <= $cantidad; $i++) {
         echo "<label for=\"num$i\">Número $i:</label>";
         echo "<input id=\"num$i\" name=\"num$i\">";
         echo "<br><br>";
