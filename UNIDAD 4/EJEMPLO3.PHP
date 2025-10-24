@@ -1,18 +1,12 @@
  <?php
-  if (
-    isset($_POST['nombre']) &&
-    isset($_POST['apellido']) &&
-    isset($_POST['edad']) &&
-    isset($_POST['profesion']) &&
-    isset($_POST['sexo']) &&
-    isset($_POST['navegador'])
-  ) {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $edad = $_POST['edad'];
-    $profesion = $_POST['profesion'];
-    $sexo = $_POST['sexo'];
-    $navegadores = $_POST['navegador'];
+
+if (!empty($_POST)) {
+    $nombre = $_POST['nombre'] ?? '';
+    $apellido = $_POST['apellido'] ?? '';
+    $edad = $_POST['edad'] ?? '';
+    $profesion = $_POST['profesion'] ?? '';
+    $sexo = $_POST['sexo'] ?? '';
+    $navegadores = $_POST['navegador'] ?? [];
 
     echo "<h3>Datos recibidos:</h3>";
     echo "Nombre: $nombre<br>";
@@ -21,9 +15,10 @@
     echo "Profesión: $profesion<br>";
     echo "Sexo: $sexo<br>";
     echo "Navegador(es): " . implode(", ", $navegadores) . "<br>";
-  }
-  else{
-    
+}
+
+
+else{
 
 ?>
 
@@ -70,12 +65,10 @@
 
     <input type="submit" value="Enviar datos">
   </form>
-
-  <hr>
-<?php
-  }
-  ?>
- 
-
 </body>
 </html>
+<?php
+}
+?>
+
+
