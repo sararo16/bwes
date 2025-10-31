@@ -1,12 +1,11 @@
 <?php
 
 session_start();
-include "pintar-circulos.php";
+include "pintar-circulos copy.php";
 
 $colores = array("red", "green", "blue", "yellow");
 $combinacion = array();
-
-for ($i = 0; $i < 4; $i++) {
+for ($i = 0; $i < $_SESSION['numero']; $i++) {
     $combinacion[] = $colores[array_rand($colores)];
 }
 
@@ -23,10 +22,10 @@ echo <<<_END
 
 _END;
 
-pintar_circulos($combinacion[0], $combinacion[1], $combinacion[2], $combinacion[3]);
+pintar_circulos(...$combinacion);
 
 echo <<<_END
-    <form action="jugar.php" method="post">
+    <form action="jugar copy.php" method="post">
         <input type="submit" name="submit" value="Vamos a jugar">
     </form>
     </body>

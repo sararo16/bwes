@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "pintar-circulos.php";
+include "pintar-circulos copy.php";
 
 //asegurarse de que jugada esta creado
 if (!isset($_SESSION['jugada'])) {
@@ -15,29 +15,29 @@ if (isset($_POST['color'])) {
 
 
 
-//pintar circulos segun botones pulsados
-if (count($_SESSION['jugada']) !==$_SESSION['numero'] ) {
-    for ($i = 0; $i < ($_SESSION['numero']); $i++) {
-        $colores [$i] = 'black';
-    }
-            for ($i = 0; $i < count($_SESSION['jugada']); $i++) {
-                $colores[$i] = $_SESSION['jugada'][$i];
-            }
+// pintar circulos según botones pulsados
+if (count($_SESSION['jugada']) !== $_SESSION['numero']) {
+    // Inicializa todos los colores como 'black'
+    $colores = array_fill(0, $_SESSION['numero'], 'black');
 
-        for ($i = 0; $i < ($_SESSION['numero']); $i++) {
-        pintar_circulos($colores[0], $colores[1], $colores[2], $colores[3]);
-            }
+    // Sustituye los colores pulsados por el usuario
+    for ($i = 0; $i < count($_SESSION['jugada']); $i++) {
+        $colores[$i] = $_SESSION['jugada'][$i];
     }
+
+    // Pinta todos los círculos en una sola llamada
+    pintar_circulos(...$colores);
+}
 
 
 
 //llamar script de respuesta
 if(count($_SESSION['jugada']) === $_SESSION['numero']){
     if ($_SESSION['jugada'] === $_SESSION['combinacioncorrecta']) {
-        header("Location: acierto.php");
+        header("Location: acierto copy.php");
         exit();
     } else {
-        header("Location: fallo.php");
+        header("Location: fallo copy.php");
         exit();
     }
    
@@ -53,7 +53,7 @@ _END;
 
 
 echo <<<_END
-    <form action="jugar.php" method="post">
+    <form action="jugar copy.php" method="post">
         <input type="submit" name="color" value="red" style=background-color:red>
         <input type="submit" name="color" value="green" style=background-color:green>
         <input type="submit" name="color" value="blue" style=background-color:blue>
