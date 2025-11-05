@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'pintar-circulos.php';
+require 'pintar_circulos.php';
 
 
 if (!isset($_SESSION['colores-escogidos'])) {
@@ -40,13 +40,14 @@ echo <<<END
     <h1>SIMÓN</h1>
         <h2>Pulsa los botones en el orden correspondiente</h2>
 END;
+//generar los botones segun los colores seleccionados
+$todos_colores=array('red','blue','yellow','green','purple','orange','pink','brown');
+$colores_disponibles = array_slice($todos_colores, 0, $_SESSION['numero-colores']);
 
-
-
-echo '<button type="submit" name="color" value="red" style="background-color:red; border:2px solid black; margin-right:10px;">ROJO</button>';
-echo '<button type="submit" name="color" value="blue" style="background-color:blue; border:2px solid black; margin-right:10px;">AZUL</button>';
-echo '<button type="submit" name="color" value="yellow" style="background-color:yellow; border:2px solid black; margin-right:10px;">AMARILLO</button>';
-echo '<button type="submit" name="color" value="green" style="background-color:green; border:2px solid black; margin-right:10px;">VERDE</button>';
+foreach ($colores_disponibles as $color) {
+    $nombre = strtoupper($color);
+    echo "<button type='submit' name='color' value='$color' style='background-color:$color; border:2px solid black; margin-right:10px;'>$nombre</button>";
+}
 
 echo '</form>';
 ?>

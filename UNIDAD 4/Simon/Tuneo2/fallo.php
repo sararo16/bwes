@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'pintar-circulos.php';
+require 'pintar_circulos.php';
 
 $colores_correctos = $_SESSION['colores-correctos'];
 $colores_escogidos = $_SESSION['colores-escogidos'];
