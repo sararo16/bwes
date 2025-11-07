@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "pintar-circulos.php";
+include "pintar-circulos.php"; 
 
 //asegurarse de que jugada esta creado
 if (!isset($_SESSION['jugada'])) {
@@ -62,9 +62,6 @@ echo <<<_END
     </body>
 </html>
 _END;
-
-
-
 
 
 ?>
