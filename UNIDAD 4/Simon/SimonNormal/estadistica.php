@@ -8,12 +8,14 @@ $pw = '';
 
     $connection = new mysqli($hn, $un, $pw, $db);
     if ($connection->connect_error) die("Fatal Error");
-    $query = "SELECT Codigo,Nombre FROM usuarios";
-    $result = $connection->query($query);
-    if (!$result) die("Fatal Error");
-    $query2 = "SELECT codigousu,COUNT(*) AS acierto FROM jugadas WHERE acierto=1 GROUP BY codigousu";
-    $result2 = $connection->query($query2);
-    if (!$result2) die("Fatal Error");
+    $query = "
+    SELECT u.Codigo, u.Nombre, COUNT(j.acierto) AS NumeroAciertos
+    FROM usuarios u
+    LEFT JOIN jugadas j ON u.Codigo = j.codigousu AND j.acierto = 1
+    GROUP BY u.Codigo, u.Nombre
+    ORDER BY u.Codigo
+";
+$result = $connection->query($query);
 echo <<<_END
 <html>
     <body>
@@ -29,21 +31,20 @@ echo <<<_END
         </tr>
 _END;
             $rows = $result->num_rows;
-            for ($j = 0 ; $j < $rows ; ++$j)
-                {
+            for ($j = 0 ; $j < $rows ; ++$j) {
+                $result->data_seek($j);
+                $row = $result->fetch_assoc();
+
                     echo "<tr>";
-                    $result->data_seek($j);
-                    echo '<td>' .htmlspecialchars($result->fetch_assoc()['Codigo']) .'</td>'; 
-                    $result->data_seek($j);
-                    echo '<td>' .htmlspecialchars($result->fetch_assoc()['Nombre']) .'</td>';
-                    $result2->data_seek($j);
-                    echo '<td>' .htmlspecialchars($result2->fetch_assoc()['acierto']) .'</td>';
-                    $result2->data_seek($j);
+                    echo '<td>' . htmlspecialchars($row['Codigo']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['Nombre']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['NumeroAciertos']) . '</td>';
+                    echo "</tr>";
+}
+
                 
-                }
         
         $result->close();
-        $result2->close();
     echo<<<_END
     </table>
     <a href="inicio.php">VOLVER AL INICIO</a>
