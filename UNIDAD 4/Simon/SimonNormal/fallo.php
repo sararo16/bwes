@@ -23,6 +23,7 @@ echo "<p>Combinación correcta:</p>";
      // Reiniciar para volver a jugar
     $_SESSION['jugada'] = [];
 
-    echo "<a href='inicio.php'>Volver a jugar</a>";
+    echo "<a href='inicio.php'>Volver a jugar</a><br>";
+    echo "<a href='estadistica.php'>Estadistica</a>";
 
 ?>

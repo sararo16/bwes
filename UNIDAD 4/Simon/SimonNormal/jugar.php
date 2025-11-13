@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "pintar-circulos.php"; 
+include "pintar-circulos.php";
 
 //asegurarse de que jugada esta creado
 if (!isset($_SESSION['jugada'])) {
@@ -16,23 +16,18 @@ if (isset($_POST['color'])) {
 
 
 //pintar circulos segun botones pulsados
-if (count($_SESSION['jugada']) !==$_SESSION['numero'] ) {
-    for ($i = 0; $i < ($_SESSION['numero']); $i++) {
-        $colores [$i] = 'black';
-    }
+if (count($_SESSION['jugada']) !== 4) {
+        $colores = ['black', 'black', 'black', 'black'];
             for ($i = 0; $i < count($_SESSION['jugada']); $i++) {
                 $colores[$i] = $_SESSION['jugada'][$i];
             }
-
-        for ($i = 0; $i < ($_SESSION['numero']); $i++) {
         pintar_circulos($colores[0], $colores[1], $colores[2], $colores[3]);
-            }
-    }
+}
 
 
 
 //llamar script de respuesta
-if(count($_SESSION['jugada']) === $_SESSION['numero']){
+if(count($_SESSION['jugada']) === 4){
     if ($_SESSION['jugada'] === $_SESSION['combinacioncorrecta']) {
         header("Location: acierto.php");
         exit();
@@ -62,6 +57,9 @@ echo <<<_END
     </body>
 </html>
 _END;
+
+
+
 
 
 ?>

@@ -1,30 +1,63 @@
-<?php
+<?php  
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-$hn='localhost';
-$db='bdsimon';
-$un='root';
-$pw='';
 
-require_once 'login.php';
- $conn = new mysqli($hn, $un, $pw, $db);
- if ($conn->connect_error) die("Fatal Error"); 
+$hn = 'localhost';
+$db = 'bdsimon';
+$un = 'root';
+$pw = '';
 
- $query = "SELECT Nombre FROM usuarios";
- $result = $conn->query($query);
- if (!$result) die("Fatal Error"); 
 
- if (!$result) die("Fatal Error");
- $rows = $result->num_rows;
- for ($j = 0 ; $j < $rows ; ++$j)
- {
+$connection = new mysqli($hn, $un, $pw, $db);
+ if ($connection->connect_error) die("Fatal Error");
 
- $result->data_seek($j);
- echo 'Nombre: ' .htmlspecialchars($result-
->fetch_assoc()['Nombre']) .'<br>';
- $result->data_seek($j);
-.'<br><br>';
- } 
+$error='';
 
-  $result->close();
- $connection->close(); 
+
+ if (isset($_POST['submit'])) {
+    if (!empty($_POST['usuario']) && !empty($_POST['contrasenia'])){
+    $usuario = $_POST['usuario'];
+    $_SESSION['usuario'] = $usuario;
+     $contrasenia = $_POST['contrasenia'];
+
+
+
+
+     $query = "SELECT * FROM usuarios WHERE Nombre = '$usuario' AND Clave = '$contrasenia'";
+     $result = $connection->query($query);
+     if (!$result) die("Fatal Error");
+     $rows = $result->num_rows;
+     if ($rows == 1) {
+         $_SESSION['usuario'] = $usuario;
+         header("Location: inicio.php");
+         exit();
+     }else {
+         $error = "Usuario o contraseña incorrectos";
+     }
+    $result->close();
+
+    }
+ }
+
+
+    $connection->close();
+echo <<<_END
+<html>
+    <body>
+        <h1>SIMÓN</h1>
+            <h2>Ingresa tus datos</h2>
+            <form action="login.php" method="post">
+                <label for="usuario">Usuario:</label><br>
+                <input type="text" name="usuario"><br><br>
+                <label for="contrasenia">Contraseña:</label><br>
+                <input type="password" name="contrasenia"><br><br>
+                <input type="submit" name="submit" value="Enviar">
+            </form>
+            <p>$error</p>
+    </body>
+</html>
+_END;
+
 ?>
