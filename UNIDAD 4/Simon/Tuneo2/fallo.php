@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'pintar_circulos.php';
+require_once 'pintar_circulos.php';
 
 $colores_correctos = $_SESSION['colores-correctos'];
 $colores_escogidos = $_SESSION['colores-escogidos'];
@@ -13,4 +13,6 @@ echo "<p>Tu combinación:</p>";
 pintar_circulos($colores_escogidos);
 
 echo '<br><a href="dificultad.php">Volver a jugar</a>';
+echo "<a href='estadistica.php'>Estadísticas</a>";
+
 ?>

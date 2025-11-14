@@ -2,6 +2,29 @@
 
 session_start();
 
+$hn = 'localhost';
+$db = 'bdsimon';
+$un = 'root';
+$pw = '';
+
+$connection = new mysqli($hn, $un, $pw, $db);
+if ($connection->connect_error) die("Fatal Error");
+
+$usuario = $_SESSION['usuario'];
+$query = "SELECT Codigo FROM usuarios WHERE Nombre = '$usuario'";
+$result = $connection->query($query);
+$row = $result->fetch_assoc();
+$codigousu = $row['Codigo'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $numcirculos = (int)$_POST['numero'];
+    $numcolores  = (int)$_POST['numero-colores'];
+
+    $query2 = "INSERT INTO jugadas (codigousu, acierto, numcirculos, numcolor)
+               VALUES ($codigousu, 1, $numcirculos, $numcolores)";
+    if (!$connection->query($query2)) die("Fatal Error");
+}
+    
 echo <<<_END
 <html>
     <body>
